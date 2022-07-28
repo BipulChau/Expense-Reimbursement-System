@@ -9,7 +9,9 @@ def test_get_user_reimbursement(mocker):
     # Arrange
     def mock_get_user_reimbursement(user_id):
         if user_id == "mahwish44":
-            return [[6, 3000.00, "Fri, 22 Jul 2022 14:55:35 GMT", None, 'pending', 'other', 'Vacation', '"/Users/bipulchaudhary/Desktop/receipt.jpg"', 'mahwish44', 'bipul513']]
+            return [[6, 3000.00, "Fri, 22 Jul 2022 14:55:35 GMT", None, 'pending', 'other', 'Vacation',
+                     '"/Users/bipulchaudhary/Desktop/receipt.jpg"', 'mahwish44', 'bipul513']]
+
     mocker.patch("dao.reimbursement_dao.ReimbursementDao.get_user_reimbursement", mock_get_user_reimbursement)
 
     # Act
@@ -30,14 +32,16 @@ def test_get_user_reimbursement(mocker):
                 "submitted_at": "Fri, 22 Jul 2022 14:55:35 GMT",
                 "type_of_expense": "other"
             }
-            ]
+        ]
     }
+
 
 def test_get_user_reimbursement_args(mocker):
     #  Arrange
     def mock_get_user_reimbursement_args(user_id, args):
         if user_id == "shaquera7" and args == "denied":
-            return [[7, 200.00, "Tue, 26 Jul 2022 15:42:47 GMT", "Wed, 27 Jul 2022 15:52:16 GMT", 'denied', 'Lodging', 'Foof', None, 'shaquera7', 'bipul513']]
+            return [[7, 200.00, "Tue, 26 Jul 2022 15:42:47 GMT", "Wed, 27 Jul 2022 15:52:16 GMT", 'denied', 'Lodging',
+                     'Foof', None, 'shaquera7', 'bipul513']]
 
     mocker.patch("dao.reimbursement_dao.ReimbursementDao.get_user_reimbursement_args", mock_get_user_reimbursement_args)
 
@@ -62,3 +66,22 @@ def test_get_user_reimbursement_args(mocker):
         ]
     }
 
+
+def test_create_reimbursement(mocker):
+    # Arrange
+    def mock_create_reimbursement(user_id, data):
+        if user_id == "shaquera7" and data == {'reimbursement_amount': 100, 'type_of_expense': 'Food',
+                                               'description': 'Client Visit',
+                                               'receipt_img': '/Users/bipulchaudhary/Desktop/receipt.jpg'}:
+            return "New reimbursement successfully created"
+
+    mocker.patch("dao.reimbursement_dao.ReimbursementDao.create_reimbursement", mock_create_reimbursement)
+
+    # Act
+    data1 = {'reimbursement_amount': 100, 'type_of_expense': 'Food',
+             'description': 'Client Visit',
+             'receipt_img': '/Users/bipulchaudhary/Desktop/receipt.jpg'}
+    actual = ReimbursementService.create_reimbursement("shaquera7", data1)
+
+    # Assert
+    actual == "New reimbursement successfully created"

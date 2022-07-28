@@ -21,6 +21,7 @@ class ReimbursementService:
 
     @staticmethod
     def create_reimbursement(user_id, data):
+        print(data)
         new_reimbursement = ReimbursementDao.create_reimbursement(user_id, data)
         if new_reimbursement:
             return new_reimbursement
