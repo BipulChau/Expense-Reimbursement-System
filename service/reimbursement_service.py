@@ -29,6 +29,7 @@ class ReimbursementService:
 
     @staticmethod
     def update_reimbursement(user_id, data):
+        print(data)
         reimb_id = data["reimb_id"]
         reimb_author = data["reimb_author"]
         status = data["status"]

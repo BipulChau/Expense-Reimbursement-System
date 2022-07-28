@@ -85,3 +85,22 @@ def test_create_reimbursement(mocker):
 
     # Assert
     actual == "New reimbursement successfully created"
+
+
+def test_update_reimbursement(mocker):
+    # Arrange
+    def mock_update_reimbursement(user_id, reimb_author, reimb_id, status):
+        if user_id == "bipul513" and reimb_author == "shaquera7" and reimb_id == 8 and status == "approved":
+            return {"message": f"Reimbursement request having reimbursement id number 8 of shaquera7 has been approved"}
+
+    mocker.patch("dao.reimbursement_dao.ReimbursementDao.update_reimbursement", mock_update_reimbursement)
+
+    # Act
+    data1 = {'reimb_id': '8', 'reimb_author': 'shaquera7', 'status': 'approved'}
+
+    actual = ReimbursementService.update_reimbursement("bipul513", data1)
+
+    # Assert
+    var = actual == {
+        "message": "Reimbursement request having reimbursement id number 8 of shaquera7 has been approved"
+    }
